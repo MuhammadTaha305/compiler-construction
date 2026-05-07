@@ -12,43 +12,22 @@ void yyerror(const char *s);
 
 %%
 
-"//".*                          { /* discard single-line comment */ }
-"/*"([^*]|\*+[^*/])*\*+"/"    { /* discard multi-line comment */ }
-
-"int"       { printf("[KEYWORD: int]\n");       }
-"float"     { printf("[KEYWORD: float]\n");     }
 "if"        { printf("[KEYWORD: if]\n");        }
-"else"      { printf("[KEYWORD: else]\n");      }
-"while"     { printf("[KEYWORD: while]\n");     }
-"return"    { printf("[KEYWORD: return]\n");    }
 "then"      { printf("[KEYWORD: then]\n");      }
 "begin"     { printf("[KEYWORD: begin]\n");     }
 "end"       { printf("[KEYWORD: end]\n");       }
 "procedure" { printf("[KEYWORD: procedure]\n"); }
 "function"  { printf("[KEYWORD: function]\n");  }
-"log"       { printf("[KEYWORD: log]\n");       }
-"exp"       { printf("[KEYWORD: exp]\n");       }
 
 [0-9]+\.[0-9]+  { printf("[FLOAT_LIT: %s]\n", yytext); }
 [0-9]+          { printf("[INT_LIT: %s]\n",   yytext); }
 
-[a-zA-Z_][a-zA-Z0-9_]*  { printf("[ID: %s]\n", yytext); }
+[a-z][a-zA-Z0-9]*  { printf("[ID: %s]\n", yytext); }
 
-"=="  { printf("[OP: ==]\n"); }
-"!="  { printf("[OP: !=]\n"); }
 "+"   { printf("[OP: +]\n");  }
 "-"   { printf("[OP: -]\n");  }
 "*"   { printf("[OP: *]\n");  }
 "/"   { printf("[OP: /]\n");  }
-"^"   { printf("[OP: ^]\n");  }
-"="   { printf("[OP: =]\n");  }
-
-"("   { printf("[DELIM: (]\n"); }
-")"   { printf("[DELIM: )]\n"); }
-"{"   { printf("[DELIM: {]\n"); }
-"}"   { printf("[DELIM: }]\n"); }
-";"   { printf("[DELIM: ;]\n"); }
-","   { printf("[DELIM: ,]\n"); }
 
 [ \t\n\r]+  { /* discard whitespace */ }
 

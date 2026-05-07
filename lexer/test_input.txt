@@ -1,11 +1,6 @@
-int x = 42;
-float y = 3.14;
-if (x == 0) {
-    return y;
-}
-// this is a comment
-/* this is a
-   block comment */
-x + y * 2
-@ 
-#
+if then begin end
+procedure function
+x 42
+value1 3.14
+sum + 5 * 2 - 1 / 4
+@
