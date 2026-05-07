@@ -5,6 +5,7 @@
 
 void yyerror(const char *s);
 int yylex();
+extern FILE *yyin;
 %}
 
 %union {

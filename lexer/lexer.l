@@ -3,7 +3,6 @@
 #include <stdlib.h>
 #include <string.h>
 
-/* Forward declarations */
 void yyerror(const char *s);
 %}
 
@@ -29,7 +28,7 @@ void yyerror(const char *s);
 "*"   { printf("[OP: *]\n");  }
 "/"   { printf("[OP: /]\n");  }
 
-[ \t\n\r]+  { /* discard whitespace */ }
+[ \t\n\r]+  { }
 
 .  { printf("ERROR: unrecognised character '%s' at line %d\n", yytext, yylineno); }
 
