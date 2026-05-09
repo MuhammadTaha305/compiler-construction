@@ -1,0 +1,16 @@
+--THREE-ADDRESS CODE--
+   0: function array_demo:
+   1: sum = 0
+   2: i = 0
+   3: L2:
+   4: if i >= L2 goto L2
+   5: t0 = i * 2
+   6: arr[i] = t0
+   7: t1 = arr[i]
+   8: t2 = sum + t2
+   9: sum = t2
+  10: t3 = i + 1
+  11: i = t3
+  12: goto L2
+  13: L2:
+  14: return sum
