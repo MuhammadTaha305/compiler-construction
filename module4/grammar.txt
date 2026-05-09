@@ -1,0 +1,12 @@
+# Target grammar from Module 4 specification
+# E   -> T E'
+# E'  -> + T E' | - T E' | epsilon
+# T   -> F T'
+# T'  -> * F T' | / F T' | epsilon
+# F   -> ( E ) | id | num
+
+E -> T E'
+E' -> + T E' | - T E' | epsilon
+T -> F T'
+T' -> * F T' | / F T' | epsilon
+F -> ( E ) | id | num

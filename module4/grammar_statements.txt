@@ -1,0 +1,10 @@
+# Assignment statement grammar
+# S -> id = E ; | if E then S else S | { S S } | epsilon
+# E -> E + T | T
+# T -> T * F | F
+# F -> ( E ) | id | num
+
+S -> id = E ; | if E then S else S | { S S } | epsilon
+E -> E + T | T
+T -> T * F | F
+F -> ( E ) | id | num

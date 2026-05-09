@@ -1,0 +1,6 @@
+# Boolean expression grammar
+# Tests nullable productions and FIRST/FOLLOW computation
+
+B -> B | T | F
+T -> T & F | F
+F -> ( B ) | true | false
