@@ -1,0 +1,430 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Compiler Visualization Dashboard</title>
+    <link rel="stylesheet" href="style.css">
+    <link href="https://fonts.googleapis.com/css2?family=Fira+Code:wght@400;500;600&family=Inter:wght@300;400;500;600;700;800&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+</head>
+<body>
+    <!-- Animated Background -->
+    <div class="bg-animation">
+        <div class="bg-gradient"></div>
+        <div class="bg-grid"></div>
+        <div class="floating-particles" id="particles"></div>
+    </div>
+
+    <div class="app-container">
+        <!-- Sidebar -->
+        <aside class="sidebar">
+            <div class="logo">
+                <div class="logo-icon">
+                    <i class="fas fa-microchip"></i>
+                </div>
+                <div class="logo-text">
+                    <span class="logo-title">MiniCompiler</span>
+                    <span class="logo-subtitle">Visualization</span>
+                </div>
+            </div>
+
+            <nav class="nav-phases">
+                <div class="nav-label">COMPILATION PHASES</div>
+                <a href="#phase1" class="nav-item" data-phase="1">
+                    <div class="nav-icon"><i class="fas fa-font"></i></div>
+                    <div class="nav-text">Lexical Analysis</div>
+                    <div class="nav-status" id="navStatus1"></div>
+                </a>
+                <a href="#phase2" class="nav-item" data-phase="2">
+                    <div class="nav-icon"><i class="fas fa-sitemap"></i></div>
+                    <div class="nav-text">Syntax Analysis</div>
+                    <div class="nav-status" id="navStatus2"></div>
+                </a>
+                <a href="#phase3" class="nav-item" data-phase="3">
+                    <div class="nav-icon"><i class="fas fa-check-double"></i></div>
+                    <div class="nav-text">Semantic Analysis</div>
+                    <div class="nav-status" id="navStatus3"></div>
+                </a>
+                <a href="#phase4" class="nav-item" data-phase="4">
+                    <div class="nav-icon"><i class="fas fa-code"></i></div>
+                    <div class="nav-text">IR Generation</div>
+                    <div class="nav-status" id="navStatus4"></div>
+                </a>
+                <a href="#phase5" class="nav-item" data-phase="5">
+                    <div class="nav-icon"><i class="fas fa-bolt"></i></div>
+                    <div class="nav-text">Optimization</div>
+                    <div class="nav-status" id="navStatus5"></div>
+                </a>
+                <a href="#phase6" class="nav-item" data-phase="6">
+                    <div class="nav-icon"><i class="fas fa-cogs"></i></div>
+                    <div class="nav-text">Code Generation</div>
+                    <div class="nav-status" id="navStatus6"></div>
+                </a>
+            </nav>
+
+            <div class="sidebar-footer">
+                <div class="stats-mini">
+                    <div class="stat-item">
+                        <span class="stat-value" id="totalTokens">0</span>
+                        <span class="stat-label">Tokens</span>
+                    </div>
+                    <div class="stat-item">
+                        <span class="stat-value" id="totalSymbols">0</span>
+                        <span class="stat-label">Symbols</span>
+                    </div>
+                    <div class="stat-item">
+                        <span class="stat-value" id="totalOpts">0</span>
+                        <span class="stat-label">Optimizations</span>
+                    </div>
+                </div>
+            </div>
+        </aside>
+
+        <!-- Main Content -->
+        <main class="main-content">
+            <!-- Header Bar -->
+            <header class="header-bar">
+                <div class="header-left">
+                    <h1>Compiler Pipeline Visualization</h1>
+                    <span class="header-badge">CS-346 Compiler Construction</span>
+                </div>
+                <div class="header-right">
+                    <div class="speed-control">
+                        <label>Speed:</label>
+                        <input type="range" id="speedSlider" min="1" max="10" value="5">
+                        <span id="speedValue">5x</span>
+                    </div>
+                </div>
+            </header>
+
+            <!-- Code Input Section -->
+            <section class="code-section">
+                <div class="code-header">
+                    <div class="code-tabs">
+                        <button class="tab-btn active" data-tab="editor">
+                            <i class="fas fa-edit"></i> Editor
+                        </button>
+                        <button class="tab-btn" data-tab="samples">
+                            <i class="fas fa-folder"></i> Samples
+                        </button>
+                    </div>
+                    <div class="code-actions">
+                        <button class="action-btn" id="clearBtn" title="Clear">
+                            <i class="fas fa-trash"></i>
+                        </button>
+                        <button class="action-btn" id="formatBtn" title="Format">
+                            <i class="fas fa-align-left"></i>
+                        </button>
+                    </div>
+                </div>
+
+                <div class="code-body">
+                    <div class="editor-container" id="editorTab">
+                        <div class="line-numbers" id="lineNumbers"></div>
+                        <textarea id="codeInput" spellcheck="false" placeholder="Enter your C code here...">/* Optimization Demo Program */
+int main() {
+    // Constant Folding
+    int a = 2 + 3;
+    int b = 10 * 2;
+
+    // Constant Propagation
+    int x = 5;
+    int y = x + 10;
+
+    // Common Subexpression
+    int p = a + b;
+    int q = a + b;
+
+    // Control Flow
+    if (y > 10) {
+        y = y * 2;
+    }
+
+    // Dead Code
+    int dead = 100;
+
+    return y + p + q;
+}</textarea>
+                    </div>
+
+                    <div class="samples-container" id="samplesTab" style="display:none">
+                        <div class="sample-card" data-sample="basic">
+                            <h4><i class="fas fa-cube"></i> Basic Program</h4>
+                            <p>Simple variable declarations and arithmetic</p>
+                        </div>
+                        <div class="sample-card" data-sample="control">
+                            <h4><i class="fas fa-random"></i> Control Flow</h4>
+                            <p>If-else and while loops</p>
+                        </div>
+                        <div class="sample-card" data-sample="function">
+                            <h4><i class="fas fa-layer-group"></i> Functions</h4>
+                            <p>Function definitions and calls</p>
+                        </div>
+                        <div class="sample-card" data-sample="optimize">
+                            <h4><i class="fas fa-bolt"></i> Optimization Demo</h4>
+                            <p>Code with optimization opportunities</p>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="compile-bar">
+                    <button class="compile-btn" id="compileBtn">
+                        <i class="fas fa-play"></i>
+                        <span>Compile & Visualize</span>
+                    </button>
+                    <button class="compile-btn secondary" id="stepBtn">
+                        <i class="fas fa-step-forward"></i>
+                        <span>Step Mode</span>
+                    </button>
+                    <button class="compile-btn secondary" id="resetBtn">
+                        <i class="fas fa-redo"></i>
+                        <span>Reset</span>
+                    </button>
+                    <div class="compile-status" id="compileStatus">
+                        <span class="status-text">Ready to compile</span>
+                    </div>
+                </div>
+            </section>
+
+            <!-- Phases Visualization -->
+            <section class="phases-section">
+                <!-- Phase 1: Lexical Analysis -->
+                <div class="phase-panel" id="phase1">
+                    <div class="phase-header">
+                        <div class="phase-icon">
+                            <i class="fas fa-font"></i>
+                        </div>
+                        <div class="phase-title">
+                            <h2>Phase 1: Lexical Analysis</h2>
+                            <p>Breaking source code into tokens</p>
+                        </div>
+                        <div class="phase-badge" id="badge1">Waiting</div>
+                    </div>
+                    <div class="phase-body">
+                        <div class="token-visualization">
+                            <div class="token-categories">
+                                <span class="cat-badge keyword">Keywords</span>
+                                <span class="cat-badge identifier">Identifiers</span>
+                                <span class="cat-badge literal">Literals</span>
+                                <span class="cat-badge operator">Operators</span>
+                                <span class="cat-badge delimiter">Delimiters</span>
+                            </div>
+                            <div class="token-stream" id="tokenStream">
+                                <div class="empty-state">
+                                    <i class="fas fa-coins"></i>
+                                    <p>Tokens will appear here</p>
+                                </div>
+                            </div>
+                            <div class="token-stats" id="tokenStats"></div>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Phase 2: Syntax Analysis -->
+                <div class="phase-panel" id="phase2">
+                    <div class="phase-header">
+                        <div class="phase-icon">
+                            <i class="fas fa-sitemap"></i>
+                        </div>
+                        <div class="phase-title">
+                            <h2>Phase 2: Syntax Analysis</h2>
+                            <p>Building Abstract Syntax Tree</p>
+                        </div>
+                        <div class="phase-badge" id="badge2">Waiting</div>
+                    </div>
+                    <div class="phase-body">
+                        <div class="ast-visualization">
+                            <div class="ast-controls">
+                                <button class="ast-btn" id="zoomIn"><i class="fas fa-search-plus"></i></button>
+                                <button class="ast-btn" id="zoomOut"><i class="fas fa-search-minus"></i></button>
+                                <button class="ast-btn" id="fitView"><i class="fas fa-expand"></i></button>
+                            </div>
+                            <div class="ast-canvas" id="astCanvas">
+                                <div class="empty-state">
+                                    <i class="fas fa-project-diagram"></i>
+                                    <p>AST will be visualized here</p>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Phase 3: Semantic Analysis -->
+                <div class="phase-panel" id="phase3">
+                    <div class="phase-header">
+                        <div class="phase-icon">
+                            <i class="fas fa-check-double"></i>
+                        </div>
+                        <div class="phase-title">
+                            <h2>Phase 3: Semantic Analysis</h2>
+                            <p>Type checking and scope validation</p>
+                        </div>
+                        <div class="phase-badge" id="badge3">Waiting</div>
+                    </div>
+                    <div class="phase-body">
+                        <div class="semantic-visualization">
+                            <div class="symbol-table-container">
+                                <h3><i class="fas fa-table"></i> Symbol Table</h3>
+                                <div class="table-wrapper">
+                                    <table class="symbol-table" id="symbolTable">
+                                        <thead>
+                                            <tr>
+                                                <th>Name</th>
+                                                <th>Type</th>
+                                                <th>Scope</th>
+                                                <th>Line</th>
+                                                <th>Attributes</th>
+                                            </tr>
+                                        </thead>
+                                        <tbody id="symbolTableBody">
+                                        </tbody>
+                                    </table>
+                                </div>
+                            </div>
+                            <div class="scope-visualization" id="scopeViz">
+                                <h3><i class="fas fa-layer-group"></i> Scope Stack</h3>
+                                <div class="scope-stack" id="scopeStack"></div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Phase 4: IR Generation -->
+                <div class="phase-panel" id="phase4">
+                    <div class="phase-header">
+                        <div class="phase-icon">
+                            <i class="fas fa-code"></i>
+                        </div>
+                        <div class="phase-title">
+                            <h2>Phase 4: IR Generation</h2>
+                            <p>Three-Address Code generation</p>
+                        </div>
+                        <div class="phase-badge" id="badge4">Waiting</div>
+                    </div>
+                    <div class="phase-body">
+                        <div class="tac-visualization">
+                            <div class="tac-info">
+                                <div class="info-card">
+                                    <span class="info-value" id="tacCount">0</span>
+                                    <span class="info-label">Instructions</span>
+                                </div>
+                                <div class="info-card">
+                                    <span class="info-value" id="tempCount">0</span>
+                                    <span class="info-label">Temporaries</span>
+                                </div>
+                                <div class="info-card">
+                                    <span class="info-value" id="labelCount">0</span>
+                                    <span class="info-label">Labels</span>
+                                </div>
+                            </div>
+                            <div class="tac-code" id="tacCode">
+                                <div class="empty-state">
+                                    <i class="fas fa-file-code"></i>
+                                    <p>TAC instructions will appear here</p>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Phase 5: Optimization -->
+                <div class="phase-panel" id="phase5">
+                    <div class="phase-header">
+                        <div class="phase-icon">
+                            <i class="fas fa-bolt"></i>
+                        </div>
+                        <div class="phase-title">
+                            <h2>Phase 5: Code Optimization</h2>
+                            <p>Applying optimization techniques</p>
+                        </div>
+                        <div class="phase-badge" id="badge5">Waiting</div>
+                    </div>
+                    <div class="phase-body">
+                        <div class="optimization-visualization">
+                            <div class="opt-techniques">
+                                <div class="opt-tech" id="optCF">
+                                    <div class="tech-icon"><i class="fas fa-calculator"></i></div>
+                                    <div class="tech-name">Constant Folding</div>
+                                    <div class="tech-count">0</div>
+                                </div>
+                                <div class="opt-tech" id="optCP">
+                                    <div class="tech-icon"><i class="fas fa-arrow-right"></i></div>
+                                    <div class="tech-name">Const Propagation</div>
+                                    <div class="tech-count">0</div>
+                                </div>
+                                <div class="opt-tech" id="optCSE">
+                                    <div class="tech-icon"><i class="fas fa-clone"></i></div>
+                                    <div class="tech-name">CSE</div>
+                                    <div class="tech-count">0</div>
+                                </div>
+                                <div class="opt-tech" id="optDCE">
+                                    <div class="tech-icon"><i class="fas fa-trash-alt"></i></div>
+                                    <div class="tech-name">Dead Code Elim</div>
+                                    <div class="tech-count">0</div>
+                                </div>
+                            </div>
+                            <div class="opt-comparison">
+                                <div class="opt-panel before">
+                                    <h4><i class="fas fa-file-alt"></i> Before Optimization</h4>
+                                    <div class="opt-code" id="optBefore"></div>
+                                </div>
+                                <div class="opt-arrow">
+                                    <i class="fas fa-arrow-right"></i>
+                                    <span class="opt-reduction" id="optReduction">0%</span>
+                                </div>
+                                <div class="opt-panel after">
+                                    <h4><i class="fas fa-file-code"></i> After Optimization</h4>
+                                    <div class="opt-code" id="optAfter"></div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Phase 6: Code Generation -->
+                <div class="phase-panel" id="phase6">
+                    <div class="phase-header">
+                        <div class="phase-icon">
+                            <i class="fas fa-cogs"></i>
+                        </div>
+                        <div class="phase-title">
+                            <h2>Phase 6: Code Generation</h2>
+                            <p>LLVM IR output</p>
+                        </div>
+                        <div class="phase-badge" id="badge6">Waiting</div>
+                    </div>
+                    <div class="phase-body">
+                        <div class="llvm-visualization">
+                            <div class="llvm-header">
+                                <span class="llvm-badge">LLVM IR</span>
+                                <button class="copy-btn" id="copyLLVM">
+                                    <i class="fas fa-copy"></i> Copy
+                                </button>
+                            </div>
+                            <div class="llvm-code" id="llvmCode">
+                                <div class="empty-state">
+                                    <i class="fas fa-microchip"></i>
+                                    <p>LLVM IR will appear here</p>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </section>
+        </main>
+    </div>
+
+    <!-- Loading Overlay -->
+    <div class="loading-overlay" id="loadingOverlay">
+        <div class="loader">
+            <div class="loader-ring"></div>
+            <div class="loader-ring"></div>
+            <div class="loader-ring"></div>
+            <span class="loader-text">Compiling...</span>
+        </div>
+    </div>
+
+    <script src="script.js"></script>
+</body>
+</html>

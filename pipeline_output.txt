@@ -1,235 +1,221 @@
-INTEGRATED COMPILER PIPELINE (Modules 1-6)
-SOURCE CODE INPUT:
-  1: /* Test program: Simple arithmetic with conditions */
-  2: 
-  3: int main() {
-  4:     int a;
-  5:     int b;
-  6:     int c;
-  7:     
-  8:     a = 5;
-  9:     b = 3;
- 10:     c = a + b;
- 11:     
- 12:     if (c > 7) {
- 13:         print(c);
- 14:     }
- 15:     
- 16:     return c;
- 17: }
+================================================================
+            COMPILATION PIPELINE OUTPUT
+================================================================
+Source File: test_input.c
+================================================================
 
+PHASE 1: LEXICAL ANALYSIS
+-------------------------
+Total Tokens: 142
 
-COMPILATION PIPELINE:
-PHASE 1: Lexical Analysis
------------------------------------------------
-Status: Tokenization complete
+  [  0] INT             int
+  [  1] IDENTIFIER      main
+  [  2] LPAREN          (
+  [  3] RPAREN          )
+  [  4] LBRACE          {
+  [  5] INT             int
+  [  6] IDENTIFIER      a
+  [  7] ASSIGN          =
+  [  8] INT_LIT         2
+  [  9] PLUS            +
+  [ 10] INT_LIT         3
+  [ 11] SEMICOLON       ;
+  [ 12] INT             int
+  [ 13] IDENTIFIER      b
+  [ 14] ASSIGN          =
+  [ 15] INT_LIT         10
+  [ 16] STAR            *
+  [ 17] INT_LIT         2
+  [ 18] SEMICOLON       ;
+  [ 19] INT             int
+  [ 20] IDENTIFIER      c
+  [ 21] ASSIGN          =
+  [ 22] INT_LIT         100
+  [ 23] SLASH           /
+  [ 24] INT_LIT         4
+  [ 25] SEMICOLON       ;
+  [ 26] INT             int
+  [ 27] IDENTIFIER      x
+  [ 28] ASSIGN          =
+  [ 29] INT_LIT         5
+  [ 30] SEMICOLON       ;
+  [ 31] INT             int
+  [ 32] IDENTIFIER      y
+  [ 33] ASSIGN          =
+  [ 34] IDENTIFIER      x
+  [ 35] PLUS            +
+  [ 36] INT_LIT         10
+  [ 37] SEMICOLON       ;
+  [ 38] INT             int
+  [ 39] IDENTIFIER      z
+  [ 40] ASSIGN          =
+  [ 41] IDENTIFIER      x
+  [ 42] STAR            *
+  [ 43] INT_LIT         2
+  [ 44] SEMICOLON       ;
+  [ 45] INT             int
+  [ 46] IDENTIFIER      p
+  [ 47] ASSIGN          =
+  [ 48] IDENTIFIER      a
+  [ 49] PLUS            +
+  [ 50] IDENTIFIER      b
+  [ 51] SEMICOLON       ;
+  [ 52] INT             int
+  [ 53] IDENTIFIER      q
+  [ 54] ASSIGN          =
+  [ 55] IDENTIFIER      a
+  [ 56] PLUS            +
+  [ 57] IDENTIFIER      b
+  [ 58] SEMICOLON       ;
+  [ 59] INT             int
+  [ 60] IDENTIFIER      r
+  [ 61] ASSIGN          =
+  [ 62] IDENTIFIER      p
+  [ 63] PLUS            +
+  [ 64] IDENTIFIER      q
+  [ 65] SEMICOLON       ;
+  [ 66] INT             int
+  [ 67] IDENTIFIER      dead1
+  [ 68] ASSIGN          =
+  [ 69] INT_LIT         100
+  [ 70] SEMICOLON       ;
+  [ 71] INT             int
+  [ 72] IDENTIFIER      dead2
+  [ 73] ASSIGN          =
+  [ 74] INT_LIT         200
+  [ 75] SEMICOLON       ;
+  [ 76] INT             int
+  [ 77] IDENTIFIER      dead3
+  [ 78] ASSIGN          =
+  [ 79] IDENTIFIER      dead1
+  [ 80] PLUS            +
+  [ 81] IDENTIFIER      dead2
+  [ 82] SEMICOLON       ;
+  [ 83] INT             int
+  [ 84] IDENTIFIER      result
+  [ 85] ASSIGN          =
+  [ 86] LPAREN          (
+  [ 87] INT_LIT         2
+  [ 88] STAR            *
+  [ 89] INT_LIT         3
+  [ 90] RPAREN          )
+  [ 91] PLUS            +
+  [ 92] LPAREN          (
+  [ 93] INT_LIT         4
+  [ 94] STAR            *
+  [ 95] INT_LIT         5
+  [ 96] RPAREN          )
+  [ 97] SEMICOLON       ;
+  [ 98] INT             int
+  [ 99] IDENTIFIER      sum
+  [100] ASSIGN          =
+  [101] INT_LIT         0
+  [102] SEMICOLON       ;
+  [103] INT             int
+  [104] IDENTIFIER      invariant
+  [105] ASSIGN          =
+  [106] INT_LIT         10
+  [107] STAR            *
+  [108] INT_LIT         5
+  [109] SEMICOLON       ;
+  [110] INT             int
+  [111] IDENTIFIER      i
+  [112] ASSIGN          =
+  [113] INT_LIT         0
+  [114] SEMICOLON       ;
+  [115] WHILE           while
+  [116] LPAREN          (
+  [117] IDENTIFIER      i
+  [118] LT              <
+  [119] INT_LIT         10
+  [120] RPAREN          )
+  [121] LBRACE          {
+  [122] IDENTIFIER      sum
+  [123] ASSIGN          =
+  [124] IDENTIFIER      sum
+  [125] PLUS            +
+  [126] IDENTIFIER      invariant
+  [127] SEMICOLON       ;
+  [128] IDENTIFIER      i
+  [129] ASSIGN          =
+  [130] IDENTIFIER      i
+  [131] PLUS            +
+  [132] INT_LIT         1
+  [133] SEMICOLON       ;
+  [134] RBRACE          }
+  [135] RETURN          return
+  [136] IDENTIFIER      result
+  [137] PLUS            +
+  [138] IDENTIFIER      sum
+  [139] SEMICOLON       ;
+  [140] RBRACE          }
+  [141] EOF             EOF
 
-Token Stream Output:
-  - Keywords: int, if, return, main, void
-  - Identifiers: a, b, c, main, print
-  - Operators: +, -, *, /, <, >, =, ==, !=
-  - Literals: 5, 3, 7, 10.5, etc.
-  - Delimiters: ( ) { } ; , :
-  - Comments: Properly stripped
+PHASE 2 & 3: SYNTAX ANALYSIS
+----------------------------
+Status: Parse successful
+AST Root: Program
 
-PHASE 2: Syntax Analysis / Parsing
------------------------------------------------
-Status: Parse tree constructed
+PHASE 4: GRAMMAR ANALYSIS
+-------------------------
+Extended Grammar Features:
+  - Exponentiation: ^ (right-associative)
+  - Math functions: log(), exp(), sqrt(), sin(), cos(), tan()
+  - LL(1) compatible grammar
 
-Abstract Syntax Tree (AST) Structure:
-  Program
-    ├─ FunctionDef: main()
-    │   ├─ VarDecl: int a
-    │   ├─ VarDecl: int b
-    │   ├─ VarDecl: int c
-    │   ├─ Assignment: a = 5
-    │   ├─ Assignment: b = 3
-    │   ├─ Assignment: c = (a + b)
-    │   ├─ IfStatement:
-    │   │   ├─ Condition: (c > 7)
-    │   │   └─ Block:
-    │   │       └─ FunctionCall: print(c)
-    │   └─ ReturnStatement: c
+PHASE 5: SEMANTIC ANALYSIS
+--------------------------
+Errors: 0, Warnings: 0
 
-PHASE 3: Extended Grammar Support
------------------------------------------------
-Status: Extended operators available
+Symbol Table:
+  print                void       scope=0
+  printf               int        scope=0
+  scanf                int        scope=0
+  log                  float      scope=0
+  exp                  float      scope=0
+  sqrt                 float      scope=0
+  sin                  float      scope=0
+  cos                  float      scope=0
+  tan                  float      scope=0
+  pow                  float      scope=0
+  main                 int        scope=0
+  a                    int        scope=1
+  b                    int        scope=1
+  c                    int        scope=1
+  x                    int        scope=1
+  y                    int        scope=1
+  z                    int        scope=1
+  p                    int        scope=1
+  q                    int        scope=1
+  r                    int        scope=1
+  dead1                int        scope=1
 
-Supported Extended Features:
-  Arithmetic:
-    - Basic: +, -, *, /
-    - Power: ^ (e.g., 2^3 = 8)
-    - Modulo: % (e.g., 5 % 2 = 1)
+PHASE 6: IR GENERATION (TAC)
+----------------------------
+Instructions: 17
+Temporaries: 8, Labels: 0
 
-  Mathematical Functions:
-    - sqrt(x)   - Square root
-    - exp(x)    - e^x
-    - log(x)    - Natural logarithm
-    - sin(x)    - Sine
-    - cos(x)    - Cosine
-    - tan(x)    - Tangent
+PHASE 7: CODE OPTIMIZATION
+--------------------------
+Constant Folding:      4
+Constant Propagation:  8
+CSE:                   1
+Dead Code Elimination: 4
+Loop Optimizations:    0
+Total Optimizations:   17
 
-  Logical Operators:
-    - &&        - Logical AND
-    - ||        - Logical OR
-    - !         - Logical NOT
+PHASE 8: LLVM IR GENERATION
+---------------------------
+Output file: llvm/output.ll
+Status: Success
 
-PHASE 4: Grammar Analysis
------------------------------------------------
-Status: Grammar validation complete
-
-
-===== GRAMMAR =====
-Start symbol: E
-
-Productions:
-1. E -> T E'
-2. E' -> + T E'
-3. E' -> - T E'
-4. E' -> ε
-5. T -> F T'
-6. T' -> * F T'
-7. T' -> / F T'
-8. T' -> ε
-9. F -> ( E )
-10. F -> id
-11. F -> num
-
-FIRST SETS: 
-FIRST(E) = { (, id, num }
-FIRST(T) = { (, id, num }
-FIRST(E') = { +, -, epsilon }
-FIRST(F) = { (, id, num }
-FIRST(T') = { *, /, epsilon }
-
-FOLLOW SETS: 
-FOLLOW(E) = { $, ) }
-FOLLOW(T) = { +, -, $, ) }
-FOLLOW(E') = { $, ) }
-FOLLOW(F) = { *, /, +, -, $, ) }
-FOLLOW(T') = { +, -, $, ) }
-
-CHECKING LL(1) COMPATIBILITY
-Grammar is LL(1) compatible (no conflicts)
-
-LL(1) PARSING TABLE: 
-
-A\a         |        + |        - |        * |        / |        ( |        ) |       id |      num |
--------------------------------------------------------------------------------------------
-E           |          |          |          |          |      [0] |          |      [0] |      [0] |
-T           |          |          |          |          |      [4] |          |      [4] |      [4] |
-E'          |      [1] |      [2] |          |          |          |      [3] |          |          |
-F           |          |          |          |          |      [8] |          |      [9] |     [10] |
-T'          |      [7] |      [7] |      [5] |      [6] |          |      [7] |          |          |
-
-PRODUCTIONS: 
-[0] E -> T E'
-[1] E' -> + T E'
-[2] E' -> - T E'
-[3] E' -> epsilon
-[4] T -> F T'
-[5] T' -> * F T'
-[6] T' -> / F T'
-[7] T' -> epsilon
-[8] F -> ( E )
-[9] F -> id
-[10] F -> num
-
-PHASE 5: Semantic Analysis...
------------------------------------------------
-Status: Type checking and Scope checking complete
-
-
---- TEST CASE 1: Type Checking and Scope Checking ---
-
-Global scope:
-  Declared: int x
-  Declared: float y
-
-  Checking if 'x' is declared: ✓ OK
-  Checking if 'z' is declared: Error detected (as expected)
-
-  Checking type compatibility (int vs float): Compatible
-  Checking type compatibility (int vs void): ✗ Error detected (as expected)
-
---- TEST CASE 2: Function Scope ---
-
-→ Entering scope: main (level 1)
-  Declared in main: int local_var
-  Checking if 'local_var' is accessible in main: OK
-
---- TEST CASE 3: Nested Scope ---
-
-→ Entering scope: if_block (level 2)
-  Declared in if_block: char nested_var
-  Checking if 'nested_var' is accessible: OK
-  Checking if 'local_var' is accessible in nested scope: OK (outer scope visible)
-← Exiting scope: if_block (level 2)
-← Exiting scope: main (level 1)
-
----SYMBOL TABLE---
-Name                 Type            Scope    Declaration Scope Declared  
--------------------------------------------------------------------------------------
-x                    int             0        GLOBAL          Yes       
-y                    float           0        GLOBAL          Yes       
-local_var            int             1        main            Yes       
-nested_var           char            2        if_block        Yes       
-
-Scope Stack:
-  Level 0: GLOBAL
-
----SEMANTIC ANALYSIS REPORT---
-Errors: 2
-Warnings: 0
-
-ERROR: Line 2: Variable 'z' used before declaration
-ERROR: Line 4: Type mismatch - int is not compatible with void
-
-PHASE 6: TAC Generation
------------------------------------------------
-Status: TAC code generated
-
-
---- Generating TAC for: ---
-int main() {
-    int a, b, c;
-    a = 5;
-    b = 3;
-    c = a + b;
-    if (c > 7) {
-        print(c);
-    }
-    return c;
-}
-
-
-THREE-ADDRESS CODE (TAC) - DETAILED
-
-Total Instructions: 11
-Temporary Variables Used: 0
-Labels Used: 2
-
-
-THREE-ADDRESS CODE (TAC): 
-
-   0: function main:
-   1: a = 5
-   2: b = 3
-   3: c = a + b
-   4: if c > L1 goto L1
-   5: goto L1
-   6: L1:
-   7: param c
-   8: t0 = call print, 1
-   9: L1:
-  10: return c
-
-
-TAC code exported to: module6/tac_output.txt
-
-FINAL COMPILATION REPORT
------------------------------------------------
-Compilation Status: SUCCESS
-Errors: 0
-Warnings: 0
-Phases Completed: 6/6
+================================================================
+                 COMPILATION SUMMARY
+================================================================
+Tokens:             142
+Semantic errors:    0
+TAC instructions:   17
+Optimizations:      17
+Compilation time:   285.00 ms
+Status:             SUCCESS
+================================================================
