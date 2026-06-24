@@ -1,102 +1,68 @@
+# Mini C Compiler — 8-Phase Pipeline
 
-# INTEGRATED C COMPILER
+An integrated mini-compiler for a C-like language, written in C with Flex and Bison. Source code is processed through eight sequential phases — from tokenisation to **LLVM IR generation** — and the project ships with a web-based **Compiler Visualization Dashboard** that shows the output of each phase.
 
-PROJECT OVERVIEW:
-  This is a fully functional integrated C compiler that processes source code
-  through 6 compilation phases sequentially, producing Three-Address Code (TAC)
-  as intermediate representation.
+> CS-346 Compiler Construction project. ~20k LOC across the phases.
 
-QUICK START:
-  1. Compile:  gcc -o integrated_compiler integrated_compiler.c -lm
-  2. Run:      ./integrated_compiler test_input.c pipeline_output.txt
-  3. View:     type pipeline_output.txt
+## Compilation pipeline
 
-COMPILATION PIPELINE (6 PHASES)
+| Phase | Stage | Tooling | Directory |
+|---|---|---|---|
+| 1 | Lexical Analysis (tokenisation) | Flex | `lexer/` |
+| 2 | Syntax Analysis (parsing → AST) | Bison | `parser/` |
+| 3 | Extended Grammar Support | Bison | `parser/` |
+| 4 | Grammar Analysis (FIRST/FOLLOW, LL(1) table) | C | `first_follow/` |
+| 5 | Semantic Analysis (type & scope checking, symbol table) | C | `semantic/` |
+| 6 | IR Generation (Three-Address Code) | C | `ir/` |
+| 7 | Code Optimisation | C | `optimizer/` |
+| 8 | LLVM IR Generation | C | `llvm/` |
 
-  [1] LEXICAL ANALYSIS (Module 1 - Flex)
-      Input:  Source Code (.c file)
-      Output: Token Stream (keywords, identifiers, operators, literals)
+Shared utilities live in `common/`. A standalone C HTTP server in `web/` serves the visualization dashboard.
 
-  [2] SYNTAX ANALYSIS / PARSING (Module 2 - Bison)
-      Input:  Token Stream
-      Output: Abstract Syntax Tree (AST)
+## Build
 
-  [3] EXTENDED GRAMMAR SUPPORT (Module 3)
-      Input:  AST
-      Output: Enhanced AST (math functions, advanced operators)
+Requires `gcc`, `flex`, and `bison` (`win_flex` / `win_bison` on Windows).
 
-  [4] GRAMMAR ANALYSIS (Module 4)
-      Input:  Grammar Rules
-      Output: FIRST/FOLLOW Sets, LL(1) Parsing Table, Conflict Report
+```bash
+make            # builds the integrated `compiler` binary
+```
 
-  [5] SEMANTIC ANALYSIS (Module 5)
-      Input:  AST from Parsing
-      Output: Type-checked & Scope-verified AST, Symbol Table
+## Run
 
-  [6] INTERMEDIATE REPRESENTATION (Module 6 - TAC)
-      Input:  Validated AST
-      Output: Three-Address Code (Ready for optimization)
+```bash
+./compiler <input_file> <output_file>
 
+# examples
+./compiler test_input.c    pipeline_output.txt   # simple program
+./compiler complex_test.c  complex_output.txt    # advanced program
+```
 
-## FILES STRUCTURE
+The output file contains the result of every phase: token stream, AST, FIRST/FOLLOW sets and LL(1) table, the type-checked symbol table, the generated Three-Address Code, the optimised IR, and the final LLVM IR.
 
+## Web dashboard
 
-INTEGRATED COMPILER (MAIN):
-  integrated_compiler.c    - Main unified driver (200+ lines)
-  test_input.c             - Simple test program
-  complex_test.c           - Advanced test program
+```bash
+cd web
+# build and run server.c (see web/ for platform notes), then open index.html
+```
 
-INDIVIDUAL MODULES (EXISTING):
-  lexer/                   - Module 1 (Lexical Analysis with Flex)
-  parser/                  - Modules 2-3 (Parsing with Bison, Extended Grammar)
-  module4/                 - Module 4 (FIRST/FOLLOW/LL(1) Analysis)
-  module5/                 - Module 5 (Semantic Analysis & Type Checking)
-  module6/                 - Module 6 (TAC Code Generation)
+The dashboard ("Compiler Visualization Dashboard") lets you paste source and inspect each compilation phase interactively.
 
-DOCUMENTATION:
-  INDEX.md                           - Master index and overview
-  QUICK_START.md                     - Quick reference guide
-  INTEGRATED_COMPILER_GUIDE.md       - Complete usage guide
-  INTEGRATED_COMPILER_STATUS.md      - Detailed implementation report
-  PROJECT_COMPLETION_SUMMARY.md      - Full project summary
+## Repository layout
 
-OUTPUT FILES:
-  pipeline_output.txt      - Output from test_input.c compilation
-  complex_output.txt       - Output from complex_test.c compilation
-  final_test.txt           - Latest verification test output
-
-
-## BUILDING THE COMPILER
-
-WINDOWS (using gcc with MinGW):
-  gcc -o integrated_compiler integrated_compiler.c -lm
-
-LINUX/MAC:
-  gcc -o integrated_compiler integrated_compiler.c -lm
-
-VERIFY BUILD:
-  ./integrated_compiler --help  (displays usage)
-
-
-## RUNNING THE COMPILER
-
-BASIC USAGE:
-  ./integrated_compiler <input_file> <output_file>
-
-EXAMPLES:
-
-  Test 1 - Simple Program:
-    ./integrated_compiler test_input.c pipeline_output.txt
-
-  Test 2 - Complex Program:
-    ./integrated_compiler complex_test.c complex_output.txt
-
-  Test 3 - Custom Program:
-    ./integrated_compiler my_program.c my_output.txt
-
-VIEW OUTPUT:
-  type pipeline_output.txt        (Windows)
-  cat pipeline_output.txt         (Linux/Mac)
-
-
-
+```
+.
+├── makefile             # builds the integrated `compiler` binary (all 8 phases)
+├── main.c               # driver — runs the full pipeline
+├── test_input.c         # simple test program
+├── complex_test.c       # advanced test program
+├── lexer/               # Phase 1  — Flex lexer
+├── parser/              # Phases 2–3 — Bison grammar (infix/prefix/postfix/extended)
+├── first_follow/        # Phase 4  — FIRST/FOLLOW/LL(1) analysis
+├── semantic/            # Phase 5  — type & scope checking
+├── ir/                  # Phase 6  — Three-Address Code generation
+├── optimizer/           # Phase 7  — IR optimisation
+├── llvm/                # Phase 8  — LLVM IR backend
+├── common/              # shared headers/utilities
+└── web/                 # C HTTP server + visualization dashboard
+```
