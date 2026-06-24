@@ -66,3 +66,11 @@ The dashboard ("Compiler Visualization Dashboard") lets you paste source and ins
 ├── common/              # shared headers/utilities
 └── web/                 # C HTTP server + visualization dashboard
 ```
+
+## Authors
+
+Built collaboratively by:
+- **[Muhammad Taha](https://github.com/MuhammadTaha305)**
+- **Sham**
+- **Abdul Moiz**
+- **Maier Ali**
