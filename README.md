@@ -1,5 +1,7 @@
 # Mini C Compiler — 8-Phase Pipeline
 
+> 📚 **Course:** Compiler Construction — Spring 2026, NUST SEECS
+
 An integrated mini-compiler for a C-like language, written in C with Flex and Bison. Source code is processed through eight sequential phases — from tokenisation to **LLVM IR generation** — and the project ships with a web-based **Compiler Visualization Dashboard** that shows the output of each phase.
 
 > CS-346 Compiler Construction project. ~20k LOC across the phases.
@@ -71,6 +73,6 @@ The dashboard ("Compiler Visualization Dashboard") lets you paste source and ins
 
 Built collaboratively by:
 - **[Muhammad Taha](https://github.com/MuhammadTaha305)**
-- **Sham**
-- **Abdul Moiz**
-- **Maier Ali**
+- **[Sham](https://github.com/shamtarani05)**
+- **[Abdul Moiz](https://github.com/AbdulMoiz132)**
+- **[Maier Ali](https://github.com/atomicfalcon)**
